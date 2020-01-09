@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright 2013 Red Hat, Inc. All rights reserved.
+# Copyright 2014 Red Hat, Inc. All rights reserved.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions
@@ -17,7 +17,7 @@
 
 Name: clustermon
 Version: 0.16.2
-Release: 28%{?dist}
+Release: 29%{?dist}
 License: GPLv2
 URL: http://sources.redhat.com/cluster/conga
 
@@ -54,6 +54,7 @@ Patch23: bz951470-fix_for_cman_get_node_call.patch
 Patch24: bz888543.patch
 Patch25: bz908728.patch
 Patch26: bz908728-related.patch
+Patch27: bz1076716.patch
 
 # Patch 100..199 are for SNMP subsystem
 Patch101: bz561413-01-Fix-REDHAT-MIB-smilint-issues.patch
@@ -135,6 +136,7 @@ This package contains Red Hat Cluster Suite SNMP/CIM module/agent/provider.
 %patch24 -p1 -b .bz888543
 %patch25 -p1 -b .bz908728
 %patch26 -p1 -b .bz908728-related
+%patch27 -p1 -b .bz1076716
 
 %build
 %configure		--arch=%{_arch} \
@@ -270,6 +272,10 @@ exit 0
 
 
 %changelog
+* Fri Jun 20 2014 Jan Pokorny <jpokorny@redhat.com> - 0.16.2-29
+- modcluster: fix modcluster module not handling stdin polling correctly
+  Resolves: rhbz#1076716
+
 * Wed Aug 14 2013 Jan Pokorny <jpokorny@redhat.com> - 0.16.2-28
 - Fix cluster-snmp module causes net-snmp to SEGV when told to reload
   Resolves: rhbz#888543
