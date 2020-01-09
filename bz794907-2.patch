@@ -1,0 +1,30 @@
+diff -ur d/ricci/modules/cluster/clumon/src/snmp-agent/Makefile c/ricci/modules/cluster/clumon/src/snmp-agent/Makefile
+--- d/ricci/modules/cluster/clumon/src/snmp-agent/Makefile	2012-02-27 16:24:45.623746254 -0500
++++ c/ricci/modules/cluster/clumon/src/snmp-agent/Makefile	2012-02-27 16:23:14.581684427 -0500
+@@ -56,17 +56,18 @@
+ 	${UNINSTALL} ${TARGET} ${libdir}/cluster-snmp
+ 
+ clean:
+-	rm -f rhc_oid.h
++	rm -f rhc_oid.h rhc_oid.h.temp
+ 	rm -f $(OBJECTS) $(TARGET)
+ 
+ rhc_oid.h: rhc_oid.cpp
+-	echo "// Automatically generated " > rhc_oid.h
+-	echo "#ifndef _RHC_OID_H" >> rhc_oid.h
+-	echo "#define _RHC_OID_H" >> rhc_oid.h
+-	echo "extern \"C\" {" >> rhc_oid.h
+-	sed -e 's/^#.*//' -e 's/^\([a-zA-Z]\)/extern \1/' -e 's/].*;/\];/' -e 's/_len.*;/_len;/' rhc_oid.cpp >> rhc_oid.h
+-	echo "};" >> rhc_oid.h
+-	echo "#endif" >> rhc_oid.h
++	echo "// Automatically generated " > rhc_oid.h.temp
++	echo "#ifndef _RHC_OID_H" >> rhc_oid.h.temp
++	echo "#define _RHC_OID_H" >> rhc_oid.h.temp
++	echo "extern \"C\" {" >> rhc_oid.h.temp
++	sed -e 's/^#.*//' -e 's/^\([a-zA-Z]\)/extern \1/' -e 's/].*;/\];/' -e 's/_len.*;/_len;/' rhc_oid.cpp >> rhc_oid.h.temp
++	echo "};" >> rhc_oid.h.temp
++	echo "#endif" >> rhc_oid.h.temp
++	mv rhc_oid.h.temp rhc_oid.h
+ 
+ check:
+ 
