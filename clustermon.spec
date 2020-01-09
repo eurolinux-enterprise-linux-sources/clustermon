@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright 2015 Red Hat, Inc. All rights reserved.
+# Copyright 2016 Red Hat, Inc. All rights reserved.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions
@@ -17,7 +17,7 @@
 
 Name: clustermon
 Version: 0.16.2
-Release: 31%{?dist}
+Release: 35%{?dist}
 License: GPLv2
 URL: http://sources.redhat.com/cluster/conga
 
@@ -56,6 +56,7 @@ Patch25: bz908728.patch
 Patch26: bz908728-related.patch
 Patch27: bz1076716.patch
 Patch28: bz1114622.patch
+Patch29: bz1219617.patch
 
 # Patch 100..199 are for SNMP subsystem
 Patch101: bz561413-01-Fix-REDHAT-MIB-smilint-issues.patch
@@ -139,6 +140,7 @@ This package contains Red Hat Cluster Suite SNMP/CIM module/agent/provider.
 %patch26 -p1 -b .bz908728-related
 %patch27 -p1 -b .bz1076716
 %patch28 -p1 -b .bz1114622
+%patch29 -p1 -b .bz1219617
 
 %build
 %configure		--arch=%{_arch} \
@@ -274,8 +276,13 @@ exit 0
 
 
 %changelog
+* Thu Jan 21 2016 Jan Pokorný <jpokorny@redhat.com> - 0.16.2-35
+- modcluster: Manage cmirrord along with other services. Original patch
+              provided by Curtis Taylor of IBM, heavily reworked later.
+- Resolves: rhbz#1219617
+
 * Tue May 05 2015 Jan Pokorný <jpokorny@redhat.com> - 0.16.2-31
-- modcluster: overload stop_service so that it can fulfill its nominal promise
+- modcluster: Overload stop_service so that it can fulfill its nominal promise
   Resolves: rhbz#1114622
 
 * Fri Jun 20 2014 Jan Pokorny <jpokorny@redhat.com> - 0.16.2-29
