@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (C) 2006-2012 Red Hat, Inc. All rights reserved.
+# Copyright 2013 Red Hat, Inc. All rights reserved.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions
@@ -17,7 +17,7 @@
 
 Name: clustermon
 Version: 0.16.2
-Release: 20%{?dist}
+Release: 28%{?dist}
 License: GPLv2
 URL: http://sources.redhat.com/cluster/conga
 
@@ -44,10 +44,16 @@ Patch15: bz742431-7.patch
 Patch16: bz742431-8.patch
 Patch17: bz742431-9.patch
 Patch18: bz794907.patch
-Patch19: bz794907-2.patch
+# omitted as better solution preventing parallel make failure
+# is in place as of 0.16.2-22
+#Patch19: bz794907-2.patch
 Patch20: bz794907-3.patch
 Patch21: bz865588.patch
 Patch22: bz885830.patch
+Patch23: bz951470-fix_for_cman_get_node_call.patch
+Patch24: bz888543.patch
+Patch25: bz908728.patch
+Patch26: bz908728-related.patch
 
 # Patch 100..199 are for SNMP subsystem
 Patch101: bz561413-01-Fix-REDHAT-MIB-smilint-issues.patch
@@ -121,10 +127,14 @@ This package contains Red Hat Cluster Suite SNMP/CIM module/agent/provider.
 %patch16 -p1 -b .bz742431-8
 %patch17 -p1 -b .bz742431-9
 %patch18 -p1 -b .bz794907
-%patch19 -p1 -b .bz794907-2
+#see above: patch19 -p1 -b .bz794907-2
 %patch20 -p1 -b .bz794907-3
 %patch21 -p1 -b .bz865588
 %patch22 -p1 -b .bz885830
+%patch23 -p1 -b .bz951470.1
+%patch24 -p1 -b .bz888543
+%patch25 -p1 -b .bz908728
+%patch26 -p1 -b .bz908728-related
 
 %build
 %configure		--arch=%{_arch} \
@@ -260,6 +270,16 @@ exit 0
 
 
 %changelog
+* Wed Aug 14 2013 Jan Pokorny <jpokorny@redhat.com> - 0.16.2-28
+- Fix cluster-snmp module causes net-snmp to SEGV when told to reload
+  Resolves: rhbz#888543
+- Fix modclusterd crashes with segfault in IPv4 only environment
+  Resolves: rhbz#951470
+
+* Wed Jul 17 2013 Ryan McCabe <rmccabe@redhat.com> - 0.16.2-21
+- modcluster: Fix for cman_get_node() call
+  Resolves: rhbz#951470
+
 * Mon Dec 10 2012 Jan Pokorny <jpokorny@redhat.com> - 0.16.2-20
 - Fix bz885830 (modcluster{,d} crashes when local cluster.conf file is too large)
 
